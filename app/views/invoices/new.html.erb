@@ -15,7 +15,7 @@
         </div>
         <div class="field">
           <%= item.label :unit_price %>
-          <%= item.number_field :unit_price, step: :any , required: true, "data-invoice-form-target": "unitPrice", data: {  action: "input->invoice-form#fieldValueChanged" }%>
+          <%= item.number_field :unit_price,  step: '0.01',  required: true, "data-invoice-form-target": "unitPrice", data: {  action: "input->invoice-form#fieldValueChanged" }%>
         </div>
         <div class="field">
           <strong>Amount: $<span class="total" data-invoice-form-target="amount"></span></strong>

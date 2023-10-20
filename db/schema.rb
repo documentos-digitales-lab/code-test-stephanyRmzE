@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_20_040307) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_20_220535) do
   create_table "customers", charset: "utf8", force: :cascade do |t|
     t.string "rfc"
     t.datetime "created_at", null: false
@@ -20,7 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_20_040307) do
   create_table "invoice_items", charset: "utf8", force: :cascade do |t|
     t.string "product"
     t.integer "quantity"
-    t.decimal "unit_price", precision: 10
+    t.decimal "unit_price", precision: 10, scale: 2
     t.bigint "invoice_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
