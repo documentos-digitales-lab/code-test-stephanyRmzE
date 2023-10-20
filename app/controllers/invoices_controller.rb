@@ -10,7 +10,7 @@ class InvoicesController < ApplicationController
   def new
 
     @invoice = @customer.invoices.build
-    @invoice.invoice_items.build 
+    @invoice.invoice_items.build
 
   end
 
@@ -22,11 +22,12 @@ class InvoicesController < ApplicationController
 
     @invoice = @customer.invoices.new(invoice_params)
 
-    if @invoice.save
+    if all_items_filled_out? && @invoice.save
       redirect_to customer_invoice_path(@customer, @invoice)
     else
       render :new
     end
+
   end
 
 
@@ -43,5 +44,12 @@ class InvoicesController < ApplicationController
 
   def invoice_params
     params.require(:invoice).permit(:customer_id, invoice_items_attributes: [:quantity, :product, :unit_price])
+  end
+
+  def all_items_filled_out?
+
+    @invoice.invoice_items.all? do |item|
+      item.quantity.present? && item.product.present? && item.unit_price.present?
+    end
   end
 end

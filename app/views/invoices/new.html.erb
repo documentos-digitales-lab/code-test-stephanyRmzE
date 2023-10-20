@@ -1,47 +1,35 @@
 <p>Please add your products and click on Create:</p>
-<%= form_for [@customer, @invoice] do |f| %>
 
-  <div class="product">
-    <h2>Item #1</h2>
-    <%= f.fields_for :invoice_items, @invoice.invoice_items[0] do |item| %>
-      <div class="field">
-        <%= item.label :quantity %>
-        <%= item.number_field :quantity %>
-      </div>
-      <div class="field">
-        <%= item.label :product %>
-        <%= item.text_field :product %>
-      </div>
-      <div class="field">
-        <%= item.label :unit_price %>
-        <%= item.number_field :unit_price, step: :any %>
+<%= form_for [@customer, @invoice], data: { controller: "invoice-form" } do |f| %>
+  <div class="invoice-items">
+    <% [0, 1].each do |index| %>
+      <h2>Item <%= index + 1 %></h2>
+      <%= f.fields_for :invoice_items, @invoice.invoice_items[index] do |item| %>
+        <div class="field">
+          <%= item.label :quantity %>
+          <%= item.number_field :quantity, required: true, "data-invoice-form-target": "quantity" , data: {  action: "input->invoice-form#fieldValueChanged"} %>
+        </div>
+        <div class="field">
+          <%= item.label :product %>
+          <%= item.text_field :product, required: true, "data-invoice-form-target": "product" %>
+        </div>
+        <div class="field">
+          <%= item.label :unit_price %>
+          <%= item.number_field :unit_price, step: :any , required: true, "data-invoice-form-target": "unitPrice", data: {  action: "input->invoice-form#fieldValueChanged" }%>
+        </div>
+        <div class="field">
+          <strong>Amount: $<span class="total" data-invoice-form-target="amount"></span></strong>
+        </div>
+      <% end %>
       </div>
     <% end %>
-    <div class="field">
-      <strong>Amount: $<span class="amount" id="amount1">0.00</span></strong>
-    </div>
   </div>
 
-  <div class="product">
-    <h2>Item #2</h2>
-    <%= f.fields_for :invoice_items, @invoice.invoice_items[1] do |item| %>
-      <div class="field">
-        <%= item.label :quantity %>
-        <%= item.number_field :quantity %>
-      </div>
-      <div class="field">
-        <%= item.label :product %>
-        <%= item.text_field :product %>
-      </div>
-      <div class="field">
-        <%= item.label :unit_price %>
-        <%= item.number_field :unit_price, step: :any %>
-      </div>
-    <% end %>
-    <div class="field">
-      <strong>Amount: $<span class="amount" id="amount2">0.00</span></strong>
-    </div>
+  <div class="total_field">
+    <h2>Total: $<span class="total" data-invoice-form-target="total" ></span></h2>
   </div>
 
-  <%= f.submit 'Create Invoice' %>
+  <div class="actions">
+    <%= f.submit 'Create An Invoice', "data-invoice-form-target": "submitButton" %>
+  </div>
 <% end %>
