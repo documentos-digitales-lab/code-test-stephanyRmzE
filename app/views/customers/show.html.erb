@@ -1,9 +1,6 @@
 <p>Please complete all of the steps on this page:</p>
 
 <ul>
-  <%= link_to 'Create An Invoice', new_customer_invoice_path(@customer), class: 'btn btn-primary' %>
+  <%= link_to 'Create An Invoice', new_customer_invoice_path(@customer), class: 'btn-create-invoice' %>
 
 </ul>
-<%= form_for(:customer, url: customer_path, method: :put) do |f| %>
-  <%= f.submit "Complete Process" %>
-<% end %>
