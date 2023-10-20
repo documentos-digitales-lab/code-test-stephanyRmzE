@@ -4,6 +4,7 @@ class CustomersController < ApplicationController
 
   def show
     @customer = Customer.find(params[:id])
+    @invoice = Invoice.new
   end
 
   def create

@@ -1,0 +1,28 @@
+<!-- app/views/invoices/show.html.erb -->
+<h1>Invoice Details</h1>
+
+<h2>Invoice Items</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Quantity</th>
+      <th>Product/Service</th>
+      <th>Unit Price</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @invoice.invoice_items.each do |item| %>
+      <tr>
+        <td><%= item.quantity %></td>
+        <td><%= item.product %></td>
+        <td><%= number_to_currency(item.unit_price) %></td>
+        <td><%= number_to_currency(item.amount) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p><strong>Sub Total:</strong> <%= number_to_currency(@invoice.sub_total) %></p>
+<p><strong>Tax:</strong> <%= number_to_currency(@invoice.tax) %></p>
+<p><strong>Total:</strong> <%= number_to_currency(@invoice.total) %></p>
