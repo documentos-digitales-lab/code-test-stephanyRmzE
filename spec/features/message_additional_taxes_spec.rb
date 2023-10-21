@@ -43,10 +43,4 @@ RSpec.describe 'Invoice Show Page', type: :feature do
     end
   end
 
-
-
-
-
-
-
 end
