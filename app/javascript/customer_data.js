@@ -1,6 +1,5 @@
 function loadCustomerData() {
   const customerIdElement = document.getElementById('customer-id');
-  const greetingElement = document.getElementById('name');
 
   if (customerIdElement) {
     const customer_id = customerIdElement.getAttribute('data-customer-id');
@@ -10,7 +9,8 @@ function loadCustomerData() {
       .then(data => {
         const firstName = data.firstName;
         const lastName = data.lastName;
-        greetingElement.innerHTML = `Hello ${firstName} ${lastName}`;
+        const greetingElement = document.getElementById('name');
+        greetingElement.innerHTML = `${firstName} ${lastName}`;
       })
       .catch(error => {
         console.error('Error fetching customer data:', error);
