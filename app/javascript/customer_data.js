@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(data => {
         firstName = data.firstName;
         lastName = data.lastName;
-        const greetingElement = document.getElementById('greeting');
-        greetingElement.innerHTML = `Hello ${firstName} ${lastName}`;
+        const greetingElement = document.getElementById('name');
+        greetingElement.innerHTML = `${firstName} ${lastName}`;
       })
       .catch(error => {
         console.error('Error fetching customer data:', error);

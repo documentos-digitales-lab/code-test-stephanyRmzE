@@ -1,9 +1,14 @@
+<%= javascript_include_tag 'customer_data' %>
+
+<div id="customer-id" data-customer-id="<%= @customer.id %>"></div>
+
 <section class="wrapper-invoice">
 
   <div class="invoice">
     <div class="invoice-information">
       <p><b>Invoice id</b> : <%= @invoice.id %> </p>
-      <p><b>Customer rfc </b>: <%= @customer.rfc %></p>
+      <p><b>Customer name</b>: <span id= "name"></p>
+      <p><b>Customer rfc</b>: <%= @customer.rfc %></p>
     </div>
     <div class="invoice-body">
       <table class="table">
