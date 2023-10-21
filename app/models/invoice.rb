@@ -23,4 +23,6 @@ class Invoice < ApplicationRecord
     product_1_amount > 2000.0 || product_2_amount > 2000.0
   end
 
+  
+
 end
