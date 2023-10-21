@@ -1,51 +1,60 @@
-<p>Hello <%= @customer_data['firstName'] %> <%= @customer_data['lastName'] %>,</p>
+<%= javascript_include_tag 'customer_data' %>
+
+<div id="customer-id" data-customer-id="<%= @customer.id %>"></div>
+<p id="greeting"></p>
 
 <p>Please add your products and click on Create:</p>
 
-<%= form_for [@customer, @invoice], data: { controller: "invoice-form" } do |f| %>
-  <div class="card">
-    <div class="invoice-items">
-      <% [0, 1].each do |index| %>
-        <h2>Item <%= index + 1 %></h2>
-        <%= f.fields_for :invoice_items, @invoice.invoice_items[index] do |item| %>
-          <div class="field">
-            <%= item.label :quantity %>
-            <%= item.number_field :quantity, required: true, "data-invoice-form-target": "quantity" , data: {  action: "input->invoice-form#fieldValueChanged"} %>
-          </div>
-          <div class="field">
-            <%= item.label :product %>
-            <%= item.text_field :product, required: true, "data-invoice-form-target": "product" %>
-          </div>
-          <div class="field">
-            <%= item.label :unit_price %>
-            <%= item.number_field :unit_price,  step: '0.01',  required: true, "data-invoice-form-target": "unitPrice", data: {  action: "input->invoice-form#fieldValueChanged" }%>
-          </div>
-          <div class="field">
-            <strong>Amount: $<span class="total" data-invoice-form-target="amount"></span></strong>
-          </div>
+<section class="wrapper-invoice">
+
+
+    <%= form_for [@customer, @invoice], data: { controller: "invoice-form" } do |f| %>
+      <div class="card">
+        <% [0, 1].each do |index| %>
+          <div class="invoice-items">
+            <h4><%= index + 1 %>. Item #<%= index + 1 %></h3>
+            <%= f.fields_for :invoice_items, @invoice.invoice_items[index] do |item| %>
+              <div class="form-field">
+                <%= item.label :quantity %>
+                <%= item.number_field :quantity, required: true, "data-invoice-form-target": "quantity" , data: {  action: "input->invoice-form#fieldValueChanged"} %>
+              </div>
+              <div class="form-field">
+                <%= item.label :product %>
+                <%= item.text_field :product, required: true, "data-invoice-form-target": "product" %>
+              </div>
+              <div class="form-field">
+                <%= item.label :unit_price %>
+                <%= item.number_field :unit_price,  step: '0.01',  required: true, "data-invoice-form-target": "unitPrice", data: {  action: "input->invoice-form#fieldValueChanged" }%>
+              </div>
+              <div class="form-field">
+                <p class ="form-amount">Amount: $<span class="total" data-invoice-form-target="amount"></span></p>
+              </div>
+            <% end %>
+            </div>
+
         <% end %>
+      </div>
+
+
+        <div class="card-subtotal">
+
+        <div class="sub_total_field">
+          <p class="sub_total_text">Sub Total: $<span data-invoice-form-target="subTotal"></span></p>
         </div>
-      <% end %>
-    </div>
+        <div class="tax_field">
+          <p class="sub_total_text">Tax: $<span data-invoice-form-target="tax"></span></p>
+        </div>
+        <div class="total_field">
+          <p class="total_text">Total: $<span data-invoice-form-target="total"></span></p>
+        </div>
 
-    <div class="card_subtotal">
+        <div class="actions">
+          <%= f.submit 'Create An Invoice', "data-invoice-form-target": "submitButton" , "class": "btn-create-invoice"%>
+        </div>
 
-    <div class="sub_total_field">
-      <p class="sub_total_text">Sub Total: $<span data-invoice-form-target="subTotal"></span></p>
-    </div>
-    <div class="tax_field">
-      <p class="sub_total_text">Tax: $<span data-invoice-form-target="tax"></span></p>
-    </div>
-    <div class="total_field">
-      <p class="total_text">Total: $<span data-invoice-form-target="total"></span></p>
-    </div>
+        </div>
+      </div>
+    <% end %>
 
-    <div class="actions">
-      <%= f.submit 'Create An Invoice', "data-invoice-form-target": "submitButton" , "class": "btn-create-invoice"%>
-    </div>
-
-    </div>
-  </div>
-<% end %>
-
+</section>
 <%= link_to 'Back', customer_path(@customer) %>

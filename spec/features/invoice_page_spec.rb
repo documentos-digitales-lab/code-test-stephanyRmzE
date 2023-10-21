@@ -1,8 +1,9 @@
 # spec/features/invoice_show_spec.rb
 require 'rails_helper'
 
-RSpec.describe 'Invoice Show Page', type: :feature do
+RSpec.describe 'Invoice Page Tax', type: :feature do
   let(:customer) { create(:customer) }
+
 
   it 'displays a message about additional tax' do
     invoice = create(:invoice, customer: customer)

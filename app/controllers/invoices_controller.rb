@@ -1,33 +1,16 @@
 class InvoicesController < ApplicationController
-  before_action :set_customer, only: [:new, :create]
+  before_action :set_customer, only: [:new, :create, :show]
   before_action :set_invoice, only: [:show]
-
-  require 'rest-client'
-
-
 
   def index
     @invoices = Invoice.all
 
   end
-  def new
-    user_id = params[:customer_id]
-    url= "https://dummyjson.com/users/#{user_id}"
-    response = Faraday.get(url)
-    if response.success?
-      @customer_data = JSON.parse(response.body)
-    else
-      flash[:alert] = "Failed to retrieve customer data from the API. Please try again later."
-      redirect_to root_path
-    end
 
+  def new
     @invoice = @customer.invoices.build
     @invoice.invoice_items.build
 
-  end
-
-  def show
-    @invoice = Invoice.find(params[:id])
   end
 
   def create

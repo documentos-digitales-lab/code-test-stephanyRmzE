@@ -1,34 +1,61 @@
-<!-- app/views/invoices/show.html.erb -->
-<h1>Invoice Details</h1>
+<section class="wrapper-invoice">
 
-<h2>Invoice Items</h2>
-<table>
-  <thead>
-    <tr>
-      <th>Quantity</th>
-      <th>Product/Service</th>
-      <th>Unit Price</th>
-      <th>Amount</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @invoice.invoice_items.each do |item| %>
-      <tr>
-        <td><%= item.quantity %></td>
-        <td><%= item.product %></td>
-        <td><%= number_to_currency(item.unit_price) %></td>
-        <td><%= number_to_currency(item.amount) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div class="invoice">
+    <div class="invoice-information">
+      <p><b>Invoice id</b> : <%= @invoice.id %> </p>
+      <p><b>Customer rfc </b>: <%= @customer.rfc %></p>
+    </div>
+    <div class="invoice-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Hrs/Qty</th>
+            <th>Product/Service</th>
+            <th>Rate/Price</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @invoice.invoice_items.each do |item| %>
+            <tr>
+              <td><%= item.quantity %></td>
+              <td><%= item.product %></td>
+              <td><%= number_to_currency(item.unit_price) %></td>
+              <td><%= number_to_currency(item.amount) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div class="flex-table">
+        <div class="flex-column"></div>
+        <div class="flex-column">
+          <table class="table-subtotal">
+            <tbody>
+              <tr>
+                <td>Sub Total</td>
+                <td><%= number_to_currency(@invoice.sub_total) %></td>
+              </tr>
+              <tr>
+                <td>Tax</td>
+                <td><%= number_to_currency(@invoice.tax) %></td>
+              </tr>
+              <tr>
+                <td id="table-total">Total</td>
+                <td id="table-total"><%= number_to_currency(@invoice.total) %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- invoice total  -->
+      <div class="invoice-additional_tax">
+        <% if @invoice.additional_tax_required? %>
+          <p>Additional tax should be added.</p>
+        <% else %>
+          <p>Additional tax is not needed.</p>
+        <% end %>
+      </div>
+    </div>
 
-<p><strong>Sub Total:</strong> <%= number_to_currency(@invoice.sub_total) %></p>
-<p><strong>Tax:</strong> <%= number_to_currency(@invoice.tax) %></p>
-<p><strong>Total:</strong> <%= number_to_currency(@invoice.total) %></p>
-
-<% if @invoice.additional_tax_required? %>
-  <p>Additional tax should be added.</p>
-<% else %>
-  <p>Additional tax is not needed.</p>
-<% end %>
+  </div>
+</section>

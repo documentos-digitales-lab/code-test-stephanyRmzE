@@ -4,7 +4,7 @@ RSpec.describe InvoicesController, type: :controller do
 
   let(:customer) { create(:customer) }
   let(:invoice) { create(:invoice, customer: customer) }
-  
+
 
   describe "routing" do
     it { should route(:get, '/customers/1/invoices/new').to(action: :new, customer_id: '1') }
@@ -102,6 +102,7 @@ RSpec.describe InvoicesController, type: :controller do
 
     end
   end
+
 
 
 end
