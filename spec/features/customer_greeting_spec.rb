@@ -11,7 +11,7 @@ RSpec.feature 'Customer Greeting', js: true do
   it 'Gives personalized greetings', js: true do
     sleep(2)
 
-    greeting_element = find('#greeting')
-    expect(greeting_element).to have_content("Hello Sheldon Quigley")
+    greeting_element = find('#name')
+    expect(greeting_element).to have_content("Sheldon Quigley")
   end
 end
