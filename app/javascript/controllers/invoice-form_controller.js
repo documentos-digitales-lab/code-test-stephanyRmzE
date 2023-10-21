@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["field", "quantity", "product", "unitPrice", "submitButton", "total", "amount"];
+  static targets = ["field", "quantity", "product", "unitPrice", "submitButton", "total", "amount", "subTotal", "tax"];
   connect() {
     this.validateForm();
   }
@@ -16,7 +16,8 @@ export default class extends Controller {
   calculateTotal() {
 
 
-      let total = 0;
+      let sub_total = 0;
+
 
       this.quantityTargets.forEach((field, index) => {
 
@@ -28,18 +29,19 @@ export default class extends Controller {
 
         if (quantityValue && unitPriceValue) {
           const amount = quantityValue * unitPriceValue;
-          total += amount;
+          sub_total += amount;
           amountTarget.textContent = amount.toFixed(2);
         }
       });
 
+
+      const tax = sub_total * 0.16;
+      const total = sub_total + tax;
+      this.taxTarget.textContent = tax.toFixed(2);
+      this.subTotalTarget.textContent = sub_total.toFixed(2);
       this.totalTarget.textContent = total.toFixed(2);
-    
 
   }
-
-
-
 
 
 

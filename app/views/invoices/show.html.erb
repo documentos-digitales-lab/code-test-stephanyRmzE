@@ -26,3 +26,9 @@
 <p><strong>Sub Total:</strong> <%= number_to_currency(@invoice.sub_total) %></p>
 <p><strong>Tax:</strong> <%= number_to_currency(@invoice.tax) %></p>
 <p><strong>Total:</strong> <%= number_to_currency(@invoice.total) %></p>
+
+<% if @invoice.additional_tax_required? %>
+  <p>Additional tax should be added.</p>
+<% else %>
+  <p>Additional tax is not needed.</p>
+<% end %>

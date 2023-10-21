@@ -14,8 +14,6 @@ RSpec.describe Invoice, type: :model do
       invoice = build(:invoice, customer: nil)
       expect(invoice).not_to be_valid
     end
-
-    # Add more validation tests as needed
   end
 
   describe 'associations' do
@@ -63,7 +61,21 @@ RSpec.describe Invoice, type: :model do
       expect(invoice.total).to be_within(0.01).of(1.16 * (2 * 10 + 3 * 15))
     end
 
-    # Add more method tests as needed
+    describe '#additional_tax_required?' do
+      it 'returns true if any product amount exceeds $2,000.00' do
+        invoice = create(:invoice, customer: customer)
+        invoice_item1 = create(:invoice_item, invoice: invoice, quantity: 50, unit_price: 50)
+        invoice_item2 = create(:invoice_item, invoice: invoice, quantity: 20, unit_price: 1500)
+        expect(invoice.additional_tax_required?).to be(true)
+      end
+
+      it 'returns false if no product amount exceeds $2,000.00' do
+        invoice = create(:invoice, customer: customer)
+        invoice_item1 = create(:invoice_item, invoice: invoice, quantity: 25, unit_price: 30)
+        invoice_item2 = create(:invoice_item, invoice: invoice, quantity: 10, unit_price: 25)
+        expect(invoice.additional_tax_required?).to be(false)
+      end
+    end
   end
 
 end
