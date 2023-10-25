@@ -1,0 +1,20 @@
+<!-- FILEPATH: /Users/steph/code/stephanyRmzE/code-test-stephanyRmzE/app/views/invoices/index.html.erb -->
+
+<h1>Invoices</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th> Invoice id</th>
+      <th>Customer id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @invoices.each do |invoice| %>
+      <tr>
+        <td><%= invoice.id %></td>
+        <td><%= invoice.customer_id %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
