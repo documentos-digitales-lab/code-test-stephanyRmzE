@@ -9,7 +9,7 @@ RSpec.feature "A customer checks into the app" do
     expect(page).to have_content "Please complete all of the steps on this page"
 
     click_on "Create An Invoice"
-
+    sleep(2)
     expect(page).to have_content("Please add your products and click on Create:")
   end
 end
